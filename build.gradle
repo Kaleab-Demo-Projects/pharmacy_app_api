@@ -19,11 +19,23 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// Spring Web (for REST API)
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Spring Data JPA
+    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL
+    // runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// PostgreSQL
+    // runtimeOnly 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+    
