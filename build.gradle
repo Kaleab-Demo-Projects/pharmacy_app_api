@@ -19,8 +19,14 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	
 	// Spring Web (for REST API)
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Google Cloud Firestore (sync client)
+    implementation 'com.google.cloud:google-cloud-firestore:3.16.0'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 

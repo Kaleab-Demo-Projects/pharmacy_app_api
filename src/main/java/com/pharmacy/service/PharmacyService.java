@@ -1,6 +1,7 @@
 package com.pharmacy.service;
 
 import com.pharmacy.dto.*;
+import com.pharmacy.firestore.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -9,30 +10,38 @@ import java.util.List;
 @Service
 public class PharmacyService {
 
-  // Later: inject repositories and map entities -> DTOs
+  private final MedicineStore medicineStore;
+  private final OrderStore orderStore;
+
+  public PharmacyService(MedicineStore medicineStore, OrderStore orderStore) {
+    this.medicineStore = medicineStore;
+    this.orderStore = orderStore;
+  }
 
   public List<DashboardStatDto> dashboardStats() {
+    var meds = medicineStore.findAll();
+    var orders = orderStore.findAll();
+
+    int totalMeds = meds.size();
+    int pending = (int) orders.stream()
+        .filter(o -> "Pending".equalsIgnoreCase(o.getStatus())
+                  || "Processing".equalsIgnoreCase(o.getStatus()))
+        .count();
+    int delivered = (int) orders.stream()
+        .filter(o -> "Delivered".equalsIgnoreCase(o.getStatus()))
+        .count();
+
     return List.of(
-      new DashboardStatDto(1, "Total Medicines", 123),
-      new DashboardStatDto(2, "Pending Orders", 15),
-      new DashboardStatDto(3, "Delivered Orders", 98)
+      new DashboardStatDto(1, "Total Medicines", totalMeds),
+      new DashboardStatDto(2, "Pending Orders", pending),
+      new DashboardStatDto(3, "Delivered Orders", delivered)
     );
   }
 
-  public List<MedicineDto> medicines() {
-    // repo.findAll().stream().map(this::toDto).toList()
-    return List.of(
-      new MedicineDto(1L, "Paracetamol", "500mg", new BigDecimal("3.99"), true),
-      new MedicineDto(2L, "Ibuprofen", "200mg", new BigDecimal("4.99"), false),
-      new MedicineDto(3L, "Amoxicillin", "250mg", new BigDecimal("12.50"), true)
-    );
-  }
+  public List<MedicineDto> medicines() { return medicineStore.findAll(); }
+  public List<OrderDto> orders() { return orderStore.findAll(); }
 
-  public List<OrderDto> orders() {
-    return List.of(
-      new OrderDto("ORD001", "John Doe", new BigDecimal("58.99"), "Shipped"),
-      new OrderDto("ORD002", "Jane Smith", new BigDecimal("23.49"), "Processing"),
-      new OrderDto("ORD003", "Bob Johnson", new BigDecimal("134.00"), "Delivered")
-    );
-  }
+  // (Optional) add passthrough create/update methods later:
+  // public void upsertMedicine(MedicineDto m) { medicineStore.upsert(m); }
+  // public void upsertOrder(OrderDto o) { orderStore.upsert(o); }
 }
