@@ -30,14 +30,14 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	// Spring Data JPA
-    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
-    // MySQL
-    // runtimeOnly 'com.mysql:mysql-connector-j'
-
-	// PostgreSQL
-    // runtimeOnly 'org.postgresql:postgresql'
+	// JWT (JJWT)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {

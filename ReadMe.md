@@ -45,6 +45,15 @@ If running locally, ensure you have your service account key file and set:
 
 Refer commit history: https://github.com/Kaleab-Demo-Projects/pharmacy_app_api/commit/d5182fedab087c9b4ddd91881c5539a26f3fda8b
 
-Command to run code with seed profile to add first values to firestore: SPRING_PROFILES_ACTIVE=seed ./gradlew bootRun  
-Command to enable accessing firestore from firestore from local api code: gcloud auth application-default login 
+Command to run code with seed profile to add first values to firestore: 
+
+SPRING_PROFILES_ACTIVE=seed ./gradlew bootRun  
+
+Command to enable accessing firestore from firestore from local api code: 
+
+gcloud auth application-default login 
+
+Run the application locally:
+
+./gradlew bootRun
 
