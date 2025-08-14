@@ -24,8 +24,10 @@ public class SecurityConfig {
       .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(auth -> auth
         .requestMatchers("/api/auth/login").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
         .anyRequest().authenticated()
       )
+      .cors(Customizer.withDefaults())
       .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
     return http.build();
   }
